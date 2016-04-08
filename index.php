@@ -42,7 +42,7 @@ if(isset($_GET['createAccount'])) {
 	$content .= "<h1>Login:</h1>";
 	$content .= '<form action="welcome.php" method="post">';
 	$content .= '<label for="email" style="text-align: right;width: 150px;float: left;">Email:</label><input type="text" name="email"><br>';
-	$content .= '<label for="password" style="text-align: right;width: 150px;float: left;">Password:</label><input type="text" name="password"><br>';
+	$content .= '<label for="password" style="text-align: right;width: 150px;float: left;">Password:</label><input type="password" name="password"><br>';
 	$content .= '<input type="submit" class="btn btn-primary">';
 	$content .= '</form>';
 	$content .= "<h1>Or:</h1>";
