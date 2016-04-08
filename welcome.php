@@ -1,9 +1,9 @@
 <?php
 
 $servername = "localhost";
-$username = "root";
-$password = "3Topper3"; //needs to be changed
-$dbname = "test";
+$username = "cse385";
+$password = "bizfik19"; 
+$dbname = "cse385";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,24 +12,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Database connected successfully";
 
-
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
-
-
-$sql = "SELECT Email, Password FROM users";
+$sql = "SELECT Email, Password FROM Customer";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
+		echo $row;
         if($row["Email"] == $_POST["email"] && $row["Password"] == $_POST["password"]){
             echo "Successful Login!";
 
@@ -40,9 +30,6 @@ if ($result->num_rows > 0) {
 } else {
 	echo "Unsuccessful login";
 }
-
-echo "Unsuccessful login";
-
 
 $conn->close();
 
