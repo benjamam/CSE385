@@ -17,30 +17,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_GET['query'])) {
-
-
-} else if (isset($_GET['insert'])) {
-
-
-} else if (isset($_GET['delete'])) {
-
-
-} else {
-
 $content .= '<div class="container">';
 
-$content .= '<h1>What would you like to do?</h1>';
+$content .= '<h1>Welcome to Project FOODIE!';
 
-$content .= '<div><a href="?query" class="btn btn-primary">Search Menus</a></div>';
+$content .= '<a href="index.php" class="btn btn-primary pull-right">Log Out</a>';
 
-$content .= '<div><a href="?insert" class="btn btn-primary">Create New Menu</a></div>';
+$content .= '<a href="delete.php" class="btn btn-primary pull-right">Delete Menu</a>';
 
-$content .= '<div><a href="?delete" class="btn btn-primary">Delete Menu</a></div>';
+$content .= '<a href="insert.php" class="btn btn-primary pull-right">Create New Menu</a>';
+
+$content .= '<a href="query.php" class="btn btn-primary pull-right">Search Menus</a></h1>';
 
 $content .= '</div>';
 
-}
 
 $conn->close();
 ?>
