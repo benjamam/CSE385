@@ -23,16 +23,77 @@ $content .= '<h1>Welcome to Project FOODIE!';
 
 $content .= '<a href="index.php" class="btn btn-primary pull-right">Log Out</a>';
 
-$content .= '<a href="delete.php" class="btn btn-primary pull-right">Delete Menu</a>';
+$content .= '<a href="delete.php" class="btn btn-primary pull-right">Delete Items</a>';
 
-$content .= '<a href="insert.php" class="btn btn-primary pull-right">Create New Menu</a>';
+$content .= '<a href="insert.php" class="btn btn-primary pull-right">Create Items</a>';
 
-$content .= '<a href="query.php" class="btn btn-primary pull-right">Search Menus</a></h1>';
+$content .= '<a href="query.php" class="btn btn-primary pull-right">Search Items</a></h1>';
 
 $content .= '</div>';
 
+// What would you like to do?
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="delete.php">
+<div class="form-group">
+  <label for="sel1">What would you like to do?:</label>
+  <select class="form-control" id="sel1" name="control">
+    <option value="foodItem">Delete Food Item</option>
+    <option value="recipe">Delete Recipe</option>
+    <option value="meal">Delete Meal</option>
+    <option value="menu">Delete Menu</option>
+  </select>
+  <input class="btn btn-primary pull-right" type="submit" name="submit"/>
+</div>
+</form>';
+
+$content .= '</div>';
+
+if (isset($_POST['control'])) {
+
+	$content .= '<div class="container">';
+
+	if ($_POST['control'] == 'foodItem') {
+		
+		$content .= "<form method='POST' action='delete.php'>
+						<label for='foodid'>Enter Food Name:</label><input name='foodid' type='text'>
+						</form>";
+
+	} else if ($_POST['control'] == 'recipe') {
 
 
+
+	} else if ($_POST['control'] == 'meal') {
+
+
+
+	} else if ($_POST['control'] == 'menu') {
+
+
+
+	} 
+
+	$content .= '</div>';
+
+	
+}
+
+// performs deletes
+if(isset($_POST['foodid'])) {
+
+	$content .= '<div class="container">';
+
+	$sql = "DELETE FROM FoodItem WHERE FoodId='" . $_POST['foodid'] . "';";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<div class="jumbotron">Item Deleted</div>';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+	
+	$content .= '</div>';
+}
 
 $conn->close();
 ?>

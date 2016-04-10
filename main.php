@@ -23,14 +23,13 @@ $content .= '<h1>Welcome to Project FOODIE!';
 
 $content .= '<a href="index.php" class="btn btn-primary pull-right">Log Out</a>';
 
-$content .= '<a href="delete.php" class="btn btn-primary pull-right">Delete Menu</a>';
+$content .= '<a href="delete.php" class="btn btn-primary pull-right">Delete Items</a>';
 
-$content .= '<a href="insert.php" class="btn btn-primary pull-right">Create New Menu</a>';
+$content .= '<a href="insert.php" class="btn btn-primary pull-right">Create Items</a>';
 
-$content .= '<a href="query.php" class="btn btn-primary pull-right">Search Menus</a></h1>';
+$content .= '<a href="query.php" class="btn btn-primary pull-right">Search Items</a></h1>';
 
 $content .= '</div>';
-
 
 $conn->close();
 ?>

@@ -19,8 +19,10 @@ if ($conn->connect_error) {
 
 // Control flow here:
 	//'create tables' to create the tables
+	//'pyramid' to populate food pyramid
+	//''test' to print users
 
-$action ="";
+$action ="test";
 
 if ($action == 'create tables') {
 
@@ -39,7 +41,7 @@ if ($action == 'create tables') {
 	
 	// create food item
 	$sql = "CREATE TABLE IF NOT EXISTS FoodItem (
-		FoodId INT not null,
+		FoodId VARCHAR(30) not null,
 		FGroup VARCHAR(12) not null, 
 		Price DECIMAL(10,5) not null,
 		Carbs DECIMAL(10,5) not null,
@@ -142,7 +144,7 @@ if ($action == 'create tables') {
 	
 	// create inRecipe
 	$sql = "CREATE TABLE IF NOT EXISTS InRecipe (
-		FoodId integer not null,
+		FoodId VARCHAR(30) not null,
 		RecipeId integer not null,
 		Number decimal(5,2) not null,
 		Unit varchar(8),
@@ -185,6 +187,83 @@ if ($action == 'create tables') {
     	echo "Error creating table: " . $conn->error;
 	}
 	
+}
+
+if ($action == "pyramid") {
+
+	$sql = 'INSERT INTO FoodGroup ( GroupName, Description ) VALUES ( "Vegetables", "Vegetables and legumes or beans");';
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table:  <br>" . $conn->error  . "<br>";
+	}
+
+	$sql = "INSERT INTO FoodGroup (GroupName, Description) VALUES ('Fruit', 'Fruit');";
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table:  <br>" . $conn->error  . "<br>";
+	}
+	
+	$sql = "INSERT INTO FoodGroup (GroupName, Description) VALUES ('Grain', 'Grain (cereal) foods, mostly wholegrain and/or high cereal fibre varieties');";
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table:  <br>" . $conn->error . "<br>";
+	}
+
+	$sql = "INSERT INTO FoodGroup (GroupName, Description) VALUES ('Protein', 'Lean meats and poultry, fish, eggs, tofu, nuts and seeds and legumes/beans');";
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table:  <br>" . $conn->error . "<br>";
+	}
+
+	$sql = "INSERT INTO FoodGroup (GroupName, Description) VALUES ('Dairy', 'Milk, yoghurt cheese and/or alternatives, mostly reduced fat');";
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table: <br>" . $conn->error . "<br>";
+	}
+	
+}
+
+if ($action == 'test') {
+
+$sql = "SELECT * FROM FoodItem;";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "Name: " . $row["FoodId"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+$result = $conn->query('DESCRIBE FoodGroup');
+while($row = $result->fetch_assoc()) {
+    echo "{$row['Field']} - {$row['Type']}<br>";
+}
+
+}
+
+if ($action == 'fix') {
+
+	$sql = "SET FOREIGN_KEY_CHECKS=1;"; //
+	
+	if ($conn->query($sql) === TRUE) {
+    	echo "Table updated successfully<br>";
+	} else {
+    	echo "Error updating table: <br>" . $conn->error . "<br>";
+	}
+
 }
 
 
