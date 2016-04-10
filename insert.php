@@ -170,7 +170,7 @@ if (isset($_POST['recipeName'])) {
 
 		if ($result->num_rows > 0) {
 			// output data of each row
-			$content .= "<form method='POST' action='insert.php?addToRec=1'><table class='table-striped table'>";
+			$content .= "<form method='POST' action='insert.php'><table class='table-striped table'>";
 			$content .= "<tr><th>Food: </th><th>Quantity: </th>";
 			while($row = $result->fetch_assoc()) {
 					$content .= "<tr><td>" . $row['FoodId'] . "</td><td><label for='" . $row['FoodId'] . "'><input type='text' name='" . $row['FoodId']. "'><td><tr>";
@@ -208,7 +208,24 @@ if (isset($_POST['mealName'])) {
 	"');";
 
 	if ($conn->query($sql) === TRUE) {
-		$content .= '<form>ADD FORM</form';
+
+		$content .= "<div content='container'>";
+		$content .= "Select the recipes to add to meal:";
+	
+		$sql = "SELECT * FROM Recipe ORDER BY RecipeId;";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<form method='POST' action='insert.php'><table class='table-striped table'>";
+			$content .= "<tr><th>Recipe:</th><th></th></tr>";
+			while($row = $result->fetch_assoc()) {
+					$content .= "<tr><td>" . $row['Name'] . "</td><td><label for='" . $row['RecipeId'] . "'><input type='checkbox' name='" . $row['RecipeId']. "'><td><tr>";
+			}
+			$content .= "</table><input class='btn btn-primary pull-right' type='submit' name='submit' /></form>";
+			
+		}
+
 	} else {
 		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
 	}

@@ -31,6 +31,8 @@ $content .= '<a href="query.php" class="btn btn-primary pull-right">Search Items
 
 $content .= '</div>';
 
+$content .= '<div class="jumbotron"><h3>Select what you would like to do from the menu bar!<h3></div>';
+
 $conn->close();
 ?>
 
