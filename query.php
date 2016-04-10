@@ -41,7 +41,7 @@ $content .= '<form method="post" action="query.php">
   				<select class="form-control" id="sel2" name="control">
    				<option value="user">Users</option>
    				<option value="foodItem">Food Items</option>
-    			<option value="recipe">Recipies</option>
+    			<option value="recipe">Recipes</option>
     			<option value="meal">Meals</option>
     			<option value="menu">Menus</option>
   				</select>
@@ -96,15 +96,58 @@ if (isset($_POST['control'])) {
 
 	} else if ($_POST['control'] == 'recipe') {
 
+		$sql = "SELECT Name, Directions FROM Recipe;";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<table class='table-striped table'>";
+			$content .= "<tr><th>Name: </th><th>Directions: </th></tr>";
+			while($row = $result->fetch_assoc()) {
+				if ($_POST['search'] == $row['Name'])
+					$content .= "<tr><td>" . $row['Name'] . "</td><td>" . $row['Directions'] . "</td></tr>";
+			}
+			$content .= "</table>";
+		} else {
+			$content .= "<div class='jumbotron'>0 results</div>";
+		}
 
 
 	} else if ($_POST['control'] == 'meal') {
 
+		$sql = "SELECT MealName FROM Meal;";
+		$result = $conn->query($sql);
 
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<table class='table-striped table'>";
+			$content .= "<tr><th>Name: </th></tr>";
+			while($row = $result->fetch_assoc()) {
+				if ($_POST['search'] == $row['MealName'])
+					$content .= "<tr><td>" . $row['MealName'] . "</td></tr>";
+			}
+			$content .= "</table>";
+		} else {
+			$content .= "<div class='jumbotron'>0 results</div>";
+		}
 
 	} else if ($_POST['control'] == 'menu') {
 
+		$sql = "SELECT MenuName FROM MenuPlan;";
+		$result = $conn->query($sql);
 
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<table class='table-striped table'>";
+			$content .= "<tr><th>Name: </th><th>Start Date: </th><th>End Date:</th></tr>";
+			while($row = $result->fetch_assoc()) {
+				if ($_POST['search'] == $row['MenuName'])
+					$content .= "<tr><td>" . $row['MenuName'] . "</td><td>" . $row['Start'] . "</td><td>" . $row['End'] . "</td></tr>";
+			}
+			$content .= "</table>";
+		} else {
+			$content .= "<div class='jumbotron'>0 results</div>";
+		}
 
 	} 
 
