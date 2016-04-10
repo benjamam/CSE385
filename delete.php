@@ -62,15 +62,21 @@ if (isset($_POST['control'])) {
 
 	} else if ($_POST['control'] == 'recipe') {
 
-
+		$content .= "<form method='POST' action='delete.php'>
+				<label for='recipeid'>Enter Recipe Name:</label><input name='recipeid' type='text'>
+				</form>";
 
 	} else if ($_POST['control'] == 'meal') {
 
-
+		$content .= "<form method='POST' action='delete.php'>
+				<label for='mealid'>Enter Meal Name:</label><input name='mealid' type='text'>
+				</form>";
 
 	} else if ($_POST['control'] == 'menu') {
 
-
+		$content .= "<form method='POST' action='delete.php'>
+				<label for='menuid'>Enter Menu Name:</label><input name='menuid' type='text'>
+				</form>";
 
 	} 
 
@@ -95,6 +101,51 @@ if(isset($_POST['foodid'])) {
 	$content .= '</div>';
 }
 
+if(isset($_POST['recipeid'])) {
+
+	$content .= '<div class="container">';
+
+	$sql = "DELETE FROM Recipe WHERE Name='" . $_POST['recipeid'] . "';";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<div class="jumbotron">Item Deleted</div>';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+	
+	$content .= '</div>';
+}
+
+if(isset($_POST['mealid'])) {
+
+	$content .= '<div class="container">';
+
+	$sql = "DELETE FROM Meal WHERE MealName='" . $_POST['mealid'] . "';";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<div class="jumbotron">Item Deleted</div>';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+	
+	$content .= '</div>';
+}
+
+if(isset($_POST['menuid'])) {
+
+	$content .= '<div class="container">';
+
+	$sql = "DELETE FROM MenuPlan WHERE MenuName='" . $_POST['menuid'] . "';";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<div class="jumbotron">Item Deleted</div>';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+	
+	$content .= '</div>';
+}
+
 $conn->close();
 ?>
 
@@ -104,6 +155,10 @@ $conn->close();
 	<head>
 		<title>Delete Items</title>
 		<meta charset="utf-8">
+		<style> 
+			label {text-align: right;width: 200px;float: left;}
+			.input-large { width: 70%;}
+		</style>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	</head>
 	<body>

@@ -31,6 +31,24 @@ $content .= '<a href="query.php" class="btn btn-primary pull-right">Search Items
 
 $content .= '</div>';
 
+// What would you like to do?
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="insert.php">
+			<div class="form-group"><label for="sel1">What would you like to do?: </label>
+			  <select class="form-control" id="sel1" name="control">
+				<option value="foodItem">Create New Food Item</option>
+				<option value="recipe">Create New Recipe</option>
+				<option value="meal">Create New Meal</option>
+				<option value="menu">Create New Menu</option>
+			  </select>
+			  <input class="btn btn-primary pull-right" type="submit" name="submit"/>
+			</div>
+			</form>';
+
+$content .= '</div>';
+
 if (isset($_POST['control'])) {
 	
 	$content .= '<div class="container">';
@@ -63,40 +81,42 @@ if (isset($_POST['control'])) {
 	} else if ($_POST['control'] == "recipe") {
 	
 		$content .= '<form method="POST" action="insert.php">
-		<label for="recipeName">Recipe Name: </label><input type="text" name="recipeName" required>
+		<label for="recipeName">Recipe Name: </label><input type="text" name="recipeName" required><br>
+		<label for="recipeDirections">Recipe Directions: </label><textarea type="text" name="recipeDirections" style="width: 70%;" required></textarea>
 		<input class="btn btn-primary pull-right" type="submit" name="submit" />
 		</form>';
 	
 	} else if ($_POST['control'] == "meal") {
 	
+		$content .= '<form method="POST" action="insert.php">
+		<label for="mealName">Meal Name: </label><input type="text" name="mealName" required><br>
+		<div class="form-group">
+  		<label for="sel3">Food Group: </label>
+  			<select class="input-large" id="sel3" name="type">
+   			<option value="bre">Breakfast</option>
+   			<option value="lun">Lunch</option>
+    		<option value="din">Dinner</option>
+    		<option value="des">Dessert</option>
+    		<option value="sna">Snack</option>
+  			</select>
+			</div>
+		<input class="btn btn-primary pull-right" type="submit" name="submit" />
+		</form>';
+	
 	} else if ($_POST['control'] == "menu") {
+	
+		$content .= '<form method="POST" action="insert.php">
+		<label for="menuName">Menu Name: </label><input type="text" name="menuName" required><br>
+		<label for="startDate">Start Date: </label><input type="text" name="startDate" required>(MM/DD/YY)<br>
+		<label for="endDate">End Date: </label><input type="text" name="endDate" required>(MM/DD/YY)<br>
+		<input class="btn btn-primary pull-right" type="submit" name="submit" />
+		</form>';
 	
 	}
 	
 	$content .= '</div>';
 	
-} else {
-	
-	// What would you like to do?
-
-	$content .= '<div class="container">';
-
-	$content .= '<form method="post" action="insert.php">
-	<div class="form-group">
-	  <label for="sel1">What would you like to do?:</label>
-	  <select class="input-large" id="sel1" name="control">
-		<option value="foodItem">Create New Food Item</option>
-		<option value="recipe">Create New Recipe</option>
-		<option value="meal">Create New Meal</option>
-		<option value="menu">Create New Menu</option>
-	  </select>
-	  <input class="btn btn-primary pull-right" type="submit" name="submit"/>
-	</div>
-	</form>';
-
-	$content .= '</div>';
-	
-}
+} 
 	
 // perform inserts
 if (isset($_POST['foodName'])) {
@@ -118,6 +138,111 @@ if (isset($_POST['foodName'])) {
 		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
 	}
 }
+
+if (isset($_POST['recipeName'])) {
+
+	$recipeId = 0;
+
+	$sql = "SELECT MAX(RecipeId) FROM Recipe;";
+	
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$recipeId = $row['MAX(RecipeId)'];
+		}
+		$recipeId++;
+	}
+
+	$sql = "INSERT INTO Recipe VALUES ('" .
+	$recipeId . "', '" .		
+	$_POST['recipeName'] . "', '" .
+	$_POST['recipeDirections'] .
+	"');";
+
+	if ($conn->query($sql) === TRUE) {
+		
+		$content .= "<div content='container'>";
+		$content .= "Select the food to add to recipe:";
+	
+		$sql = "SELECT * FROM FoodItem ORDER BY FoodId;";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<form method='POST' action='insert.php?addToRec=1'><table class='table-striped table'>";
+			$content .= "<tr><th>Food: </th><th>Quantity: </th>";
+			while($row = $result->fetch_assoc()) {
+					$content .= "<tr><td>" . $row['FoodId'] . "</td><td><label for='" . $row['FoodId'] . "'><input type='text' name='" . $row['FoodId']. "'><td><tr>";
+			}
+			$content .= "</table><input class='btn btn-primary pull-right' type='submit' name='submit' /></form>";
+			
+		}
+	
+	
+		$content .= '</div>';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+}
+
+if (isset($_POST['mealName'])) {
+
+	$mealId = 0;
+
+	$sql = "SELECT MAX(MealId) FROM Meal;";
+	
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$mealId = $row['MAX(MealId)'];
+		}
+		$mealId++;
+	}
+
+	$sql = "INSERT INTO Meal VALUES ('" .
+	$mealId . "', '" .		
+	$_POST['mealName'] . "', '" .
+	$_POST['type'] .
+	"');";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<form>ADD FORM</form';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+}
+
+if (isset($_POST['menuName'])) {
+
+	$menuId = 0;
+
+	$sql = "SELECT MAX(MenuId) FROM MenuPlan;";
+	
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$mealId = $row['MAX(MenuId)'];
+		}
+		$menuId++;
+	}
+
+	$sql = "INSERT INTO MenuPlan VALUES ('" .
+	$menuId . "', '" .		
+	$_POST['menuName'] . "', '" .
+	$_POST['startDate'] . "', '" .
+	$_POST['endDate'] .
+	"');";
+
+	if ($conn->query($sql) === TRUE) {
+		$content .= '<form>ADD FORM</form';
+	} else {
+		$content .= '<div class="jumbotron">Error: ' . $conn->error . "</div>";
+	}
+}
+
 
 $conn->close();
 ?>

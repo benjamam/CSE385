@@ -19,7 +19,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
-		echo $row;
+		//echo $row;
         if($row["Email"] == $_POST["email"] && $row["Password"] == $_POST["password"]){
             echo "Successful Login!";
 
@@ -31,10 +31,28 @@ if ($result->num_rows > 0) {
 	echo "Unsuccessful login";
 }
 
+$content ="";
+
+$content .= "<div class='jumbotron'>Invalid username or password.</div>";
+
 $conn->close();
 
 
 
 ?>
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Delete Items</title>
+		<meta charset="utf-8">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container">
+			<?=$content?>
+		</div>
+	</body>
+</html>
 
 

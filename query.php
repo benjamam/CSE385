@@ -38,7 +38,7 @@ $content .= '<div class="container">';
 $content .= '<form method="post" action="query.php">
 			<div class="form-group">
   			<label for="sel2">What do you wish to search?: </label>
-  				<select class="input-large" id="sel2" name="control">
+  				<select class="form-control" id="sel2" name="control">
    				<option value="user">Users</option>
    				<option value="foodItem">Food Items</option>
     			<option value="recipe">Recipies</option>
@@ -122,6 +122,10 @@ $conn->close();
 	<head>
 		<title>Search for Items</title>
 		<meta charset="utf-8">
+		<style> 
+			label {text-align: right;width: 200px;float: left;}
+			.input-large { width: 70%;}
+		</style>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	</head>
 	<body>
