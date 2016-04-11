@@ -20,9 +20,10 @@ if ($conn->connect_error) {
 // Control flow here:
 	//'create tables' to create the tables
 	//'pyramid' to populate food pyramid
-	//''test' to print users
+	//'printUsers' to print users
+	//'update' to update a table
 
-$action ="test";
+$action ="";
 
 if ($action == 'create tables') {
 
@@ -233,7 +234,7 @@ if ($action == "pyramid") {
 	
 }
 
-if ($action == 'test') {
+if ($action == 'printUsers') {
 
 $sql = "SELECT * FROM FoodItem;";
 $result = $conn->query($sql);
@@ -254,7 +255,7 @@ while($row = $result->fetch_assoc()) {
 
 }
 
-if ($action == 'fix') {
+if ($action == 'update') {
 
 	$sql = "SET FOREIGN_KEY_CHECKS=1;"; //
 	
