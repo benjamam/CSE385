@@ -22,8 +22,8 @@ if(isset($_GET['createAccount'])) {
 	$content .= '<h1>Create Account:</h1>';
 	$content .= '<form action="?setAccount" method="post">';
 	$content .= '<label for="name" style="text-align: right;width: 150px;float: left;">Name:</label><input type="text" name="name"><br>';
-	$content .= '<label for="email" style="text-align: right;width: 150px;float: left;">Email:</label><input type="text" name="email"><br>';
-	$content .= '<label for="password" style="text-align: right;width: 150px;float: left;">Password:</label><input type="text" name="password">(12 or less characters)<br>';
+	$content .= '<label for="email" style="text-align: right;width: 150px;float: left;">Email:</label><input type="email" name="email"><br>';
+	$content .= '<label for="password" style="text-align: right;width: 150px;float: left;">Password:</label><input type="password" name="password">(12 or less characters)<br>';
 	$content .= '<input type="submit" class="btn btn-primary">'; //href="?setAccount=1"
 	$content .= "</form>";
 	
@@ -32,7 +32,8 @@ if(isset($_GET['createAccount'])) {
 	$sql = "INSERT INTO Customer VALUES ('" . $_POST['email'] . "', '" . $_POST['name'] . "', '" . $_POST['password'] . "');";
 	
 	if ($conn->query($sql) === TRUE) {
-    	echo "New account created successfully";
+    	echo "<div class='container'><div class='jumbotron'>New account created successfully";
+    	echo "<a href='main.php' class='btn btn-primary pull-right'>Continue to Site!</a></div></div>";
 	} else {
     	echo "Error: " . $sql . "<br>" . $conn->error;
 	}
@@ -41,7 +42,7 @@ if(isset($_GET['createAccount'])) {
 	
 	$content .= "<h1>Login:</h1>";
 	$content .= '<form action="welcome.php" method="post">';
-	$content .= '<label for="email" style="text-align: right;width: 150px;float: left;">Email:</label><input type="text" name="email"><br>';
+	$content .= '<label for="email" style="text-align: right;width: 150px;float: left;">Email:</label><input type="email" name="email"><br>';
 	$content .= '<label for="password" style="text-align: right;width: 150px;float: left;">Password:</label><input type="password" name="password"><br>';
 	$content .= '<input type="submit" class="btn btn-primary">';
 	$content .= '</form>';

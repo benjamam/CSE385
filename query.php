@@ -39,14 +39,27 @@ $content .= '<form method="post" action="query.php">
 			<div class="form-group">
   			<label for="sel2">What do you wish to search?: </label>
   				<select class="form-control" id="sel2" name="control">
-   				<option value="user">Users</option>
-   				<option value="foodItem">Food Items</option>
-    			<option value="recipe">Recipes</option>
-    			<option value="meal">Meals</option>
-    			<option value="menu">Menus</option>
+   				<option value="user">Users (By Name or Email)</option>
+   				<option value="foodItem">Food Items (By Name)</option>
+    			<option value="recipe">Recipes (By Name)</option>
+    			<option value="meal">Meals (By Name)</option>
+    			<option value="menu">Menus (By Name)</option>
   				</select>
 			</div>
 			<label for="search">Search: </label><input type="text" name="search">
+			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
+
+$content .= '</div>';
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="query.php">
+			<div class="form-group">
+  			<label for="sel3">Or: </label>
+  				<select class="form-control" id="sel3" name="control">
+   				<option value="mealNut">Meals (By Nutrients or Price)</option>
+  				</select>
+			</div>
 			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
 
 $content .= '</div>';
@@ -149,12 +162,37 @@ if (isset($_POST['control'])) {
 			$content .= "<div class='jumbotron'>0 results</div>";
 		}
 
-	} 
+	} else if ($_POST['control'] == 'foodItemNut') {
+
+		$content .= '<form method="POST" action="query.php">
+		<div class="form-group">
+  		<label for="sel3">Nutrient </label>
+  			<select class="input-large" id="sel3" name="nutrient">
+   			<option value="Carbs">Carbohydrates</option>
+   			<option value="Protn">Protein</option>
+    		<option value="Sod">Sodium</option>
+    		<option value="Sug">Sugar</option>
+    		<option value="Cal">Calories</option>
+    		<option value="Fat">Fat</option>
+  			</select>
+			</div>
+		<div class="form-group">
+  		<label for="sel4">Nutrient </label>
+  			<select class="input-large" id="sel4" name="nutrient">
+   			<option value="more"> More than </option>
+   			<option value="less"> Less than </option>
+  			</select>
+			</div>
+		<label for="quantity">Quantity: </label><input type="number" step="any" required><br>
+		<input class="btn btn-primary pull-right" type="submit" name="submit" />
+		</form>';
+
+		$sql = "SELECT * FROM FoodItem;";
+		$result = $conn->query($sql);
 
 	$content .= '</div>';
 
 }
-
 
 $conn->close();
 ?>
