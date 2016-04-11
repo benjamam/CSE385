@@ -224,7 +224,8 @@ if (isset($_POST['mealName'])) {
 			$content .= "<form method='POST' action='insert.php'><table class='table-striped table'>";
 			$content .= "<tr><th>Recipe:</th><th></th></tr>";
 			while($row = $result->fetch_assoc()) {
-					$content .= "<tr><td>" . $row['Name'] . "</td><td><label for='" . $row['RecipeId'] . "'><input type='checkbox' name='" . $row['RecipeId']. "'value='value'" . $iterator. "''><td><tr>";
+					$content .= "<tr><td>" . $row['Name'] . "</td><td><label for='" . $row['RecipeId'] . "'><input type='checkbox' name='" . $row['RecipeId']. "'value='value'><td><tr>";
+					$a++;
 			}
 			$content .= "</table><input class='btn btn-primary pull-right' type='submit' name='submit' /></form>";
 			
