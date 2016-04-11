@@ -31,39 +31,6 @@ $content .= '<a href="query.php" class="btn btn-primary pull-right">Search Items
 
 $content .= '</div>';
 
-// What would you like to do?
-
-$content .= '<div class="container">';
-
-$content .= '<form method="post" action="query.php">
-			<div class="form-group">
-  			<label for="sel2">What do you wish to search?: </label>
-  				<select class="form-control" id="sel2" name="control">
-   				<option value="user">Users (By Name or Email)</option>
-   				<option value="foodItem">Food Items (By Name)</option>
-    			<option value="recipe">Recipes (By Name)</option>
-    			<option value="meal">Meals (By Name)</option>
-    			<option value="menu">Menus (By Name)</option>
-  				</select>
-			</div>
-			<label for="search">Search: </label><input type="text" name="search">
-			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
-
-$content .= '</div>';
-
-$content .= '<div class="container">';
-
-$content .= '<form method="post" action="query.php">
-			<div class="form-group">
-  			<label for="sel3">Or search by: </label>
-  				<select class="form-control" id="sel3" name="control">
-   				<option value="mealNut">Meals (By Nutrients or Price)</option>
-  				</select>
-			</div>
-			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
-
-$content .= '</div>';
-
 if (isset($_POST['control'])) {
 
 	$content .= '<div class="container">';
@@ -190,9 +157,76 @@ if (isset($_POST['control'])) {
 		$sql = "SELECT * FROM FoodItem;";
 		$result = $conn->query($sql);
 	
+	} else if ($_POST['control'] == 'userMeals') {
+
+		$sql = "SELECT CustomerName, MenuName
+			FROM Customer LEFT JOIN Eats ON Customer.Email = Eats.Email LEFT JOIN MenuPlan ON Eats.MenuId = MenuPlan.MenuId;";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<table class='table-striped table'>";
+			$content .= "<tr><th>Name: </th><th>Menu: </th></tr>";
+			while($row = $result->fetch_assoc()) {
+					$content .= "<tr><td>" . $row['CustomerName'] . "</td><td>" . $row['MenuName'] . "</td></tr>";
+			}
+			$content .= "</table>";
+		} else {
+			$content .= "<div class='jumbotron'>0 results</div>";
+		}
+	
 	}
 
 	$content .= '</div>';
+
+} else {
+
+// What would you like to do?
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="query.php">
+			<div class="form-group">
+  			<label for="sel2">What do you wish to search?: </label>
+  				<select class="form-control" id="sel2" name="control">
+   				<option value="user">Users (By Name or Email)</option>
+   				<option value="foodItem">Food Items (By Name)</option>
+    			<option value="recipe">Recipes (By Name)</option>
+    			<option value="meal">Meals (By Name)</option>
+    			<option value="menu">Menus (By Name)</option>
+  				</select>
+			</div>
+			<label for="search">Search: </label><input type="text" name="search">
+			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
+
+$content .= '</div>';
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="query.php">
+			<div class="form-group">
+  			<label for="sel3">Or search by: </label>
+  				<select class="form-control" id="sel3" name="control">
+   				<option value="mealNut">Meals (By Nutrients or Price)</option>
+  				</select>
+			</div>
+			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
+			
+$content .= '</div>';
+
+$content .= '<div class="container">';
+
+$content .= '<form method="post" action="query.php">
+			<div class="form-group">
+  			<label for="sel4">Or list all by: </label>
+  				<select class="form-control" id="sel4" name="control">
+   				<option value="userMeals">User</option>
+  				</select>
+			</div>
+			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
+
+$content .= '</div>';
+
 
 }
 

@@ -27,6 +27,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         echo "GroupName: " . $row["GroupName"] . "<br>" . "Description: " . $row["Description"] . "<br>";
+        echo "<br>";
     }
 } else {
     echo "0 results";
@@ -162,7 +163,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "FoodId: " . $row["FoodId"] . "<br>" . "Recipe: " . $row["Recipe"] . "<br>" . "Number: " . $row["Number"] . "<br>" . "Unit: " . $row["Unit"] . "<br>";
+        echo "FoodId: " . $row["FoodId"] . "<br>" . "RecipeId: " . $row["RecipeId"] . "<br>" . "Number: " . $row["Number"] . "<br>" . "Unit: " . $row["Unit"] . "<br>";
         echo "<br>";
     }
 } else {
