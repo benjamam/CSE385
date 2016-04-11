@@ -208,21 +208,28 @@ if (isset($_POST['mealName'])) {
 	"');";
 
 	if ($conn->query($sql) === TRUE) {
-
+				
 		$content .= "<div content='container'>";
 		$content .= "Select the recipes to add to meal:";
 	
 		$sql = "SELECT * FROM Recipe ORDER BY RecipeId;";
 		$result = $conn->query($sql);
-
+		
+		$row_cnt = $result->num_rows;
+		
 		if ($result->num_rows > 0) {
+			
+			$iterator = 0;
 			// output data of each row
 			$content .= "<form method='POST' action='insert.php'><table class='table-striped table'>";
 			$content .= "<tr><th>Recipe:</th><th></th></tr>";
 			while($row = $result->fetch_assoc()) {
-					$content .= "<tr><td>" . $row['Name'] . "</td><td><label for='" . $row['RecipeId'] . "'><input type='checkbox' name='" . $row['RecipeId']. "'><td><tr>";
+					$content .= "<tr><td>" . $row['Name'] . "</td><td><label for='" . $row['RecipeId'] . "'><input type='checkbox' name='" . $row['RecipeId']. "'value='1'><td><tr>";
+					$a++;
 			}
 			$content .= "</table><input class='btn btn-primary pull-right' type='submit' name='submit' /></form>";
+			
+			
 			
 		}
 

@@ -37,6 +37,7 @@ if(isset($_GET['createAccount'])) {
 	} else {
     	echo "Error: " . $sql . "<br>" . $conn->error;
 	}
+	// We might catch the exception when the user tries to add a duplicate entry
 	
 } else {
 	

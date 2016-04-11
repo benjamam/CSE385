@@ -55,7 +55,7 @@ $content .= '<div class="container">';
 
 $content .= '<form method="post" action="query.php">
 			<div class="form-group">
-  			<label for="sel3">Or: </label>
+  			<label for="sel3">Or search by: </label>
   				<select class="form-control" id="sel3" name="control">
    				<option value="mealNut">Meals (By Nutrients or Price)</option>
   				</select>
@@ -162,12 +162,12 @@ if (isset($_POST['control'])) {
 			$content .= "<div class='jumbotron'>0 results</div>";
 		}
 
-	} else if ($_POST['control'] == 'foodItemNut') {
+	} else if ($_POST['control'] == 'mealNut') {
 
 		$content .= '<form method="POST" action="query.php">
 		<div class="form-group">
-  		<label for="sel3">Nutrient </label>
-  			<select class="input-large" id="sel3" name="nutrient">
+  		<label for="sel4">Nutrient </label>
+  			<select class="input-large" id="sel4" name="nutrient">
    			<option value="Carbs">Carbohydrates</option>
    			<option value="Protn">Protein</option>
     		<option value="Sod">Sodium</option>
@@ -189,6 +189,8 @@ if (isset($_POST['control'])) {
 
 		$sql = "SELECT * FROM FoodItem;";
 		$result = $conn->query($sql);
+	
+	}
 
 	$content .= '</div>';
 
