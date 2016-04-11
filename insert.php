@@ -229,8 +229,8 @@ if (isset($_POST['mealName'])) {
 			}
 			$content .= "</table><input class='btn btn-primary pull-right' type='submit' name='submit' /></form>";
 			
-			if(isset($_POST['test'])){
-				
+			if(isset($_POST['RecipeID'])){
+				$content .= "<p>Did It!</p>";
 			}
 			
 		}
