@@ -131,7 +131,7 @@ if (isset($_POST['control'])) {
 
 	} else if ($_POST['control'] == 'mealNut') {
 
-		$content .= '<form method="POST" action="query.php">
+		$content .= '<form method="POST" action="query.php?quer=1">
 		<div class="form-group">
   		<label for="sel4">Nutrient </label>
   			<select class="input-large" id="sel4" name="nutrient">
@@ -145,17 +145,14 @@ if (isset($_POST['control'])) {
 			</div>
 		<div class="form-group">
   		<label for="sel4">Nutrient </label>
-  			<select class="input-large" id="sel4" name="nutrient">
-   			<option value="more"> More than </option>
-   			<option value="less"> Less than </option>
+  			<select class="input-large" id="sel4" name="moreLess">
+   			<option value=">"> More than </option>
+   			<option value="<"> Less than </option>
   			</select>
 			</div>
-		<label for="quantity">Quantity: </label><input type="number" step="any" required><br>
+		<label for="quantity">Quantity: </label><input type="number" step="any" name="quantity" required><br>
 		<input class="btn btn-primary pull-right" type="submit" name="submit" />
 		</form>';
-
-		$sql = "SELECT * FROM FoodItem;";
-		$result = $conn->query($sql);
 	
 	} else if ($_POST['control'] == 'userMeals') {
 
@@ -179,6 +176,27 @@ if (isset($_POST['control'])) {
 
 	$content .= '</div>';
 
+} else if (isset($_GET['quer']) AND $_GET['quer'] == 1) {
+	
+	$sql = "SELECT Name
+		FROM Recipe NATURAL JOIN InRecipe NATURAL JOIN FoodItem
+		GROUP BY RecipeId
+		HAVING SUM(" . $_POST['nutrient'] . ") " . $_POST['moreLess'] . $_POST['quantity'] . ";";
+		
+	$result = $conn->query($sql);
+	
+	if ($result->num_rows > 0) {
+			// output data of each row
+			$content .= "<table class='table-striped table'>";
+			$content .= "<tr><th>Recipe: </th></tr>";
+			while($row = $result->fetch_assoc()) {
+					$content .= "<tr><td>" . $row['Name'] . "</td></tr>";
+			}
+			$content .= "</table>";
+		} else {
+			$content .= "<div class='jumbotron'>0 results</div>";
+		}
+	
 } else {
 
 // What would you like to do?
@@ -226,7 +244,6 @@ $content .= '<form method="post" action="query.php">
 			<input class="btn btn-primary pull-right" type="submit" name="submit"/></form>';
 
 $content .= '</div>';
-
 
 }
 
